@@ -157,7 +157,64 @@ var Sudoku = ( function ( $) {
             for (var i=0; i<9; i++) {
                 this.matrix.row[i] = [ '', '', '', '', '', '', '', '', ''];
                 this.matrix.col[i] = [ '', '', '', '', '', '', '', '', ''];
+                this.validation.row[i] = [];
+                this.validation.col[i] = [];
             }
-        }
+
+            for ( var row=0; row<3; row++) {
+                this.matrix.sect[row] = [];
+                this.validation.sect[row] = {};
+                for (var col=0; col<3; col++) {
+                    this.matrix.sect[row][col] = [ '', '', '', '', '', '', '', '', ''];
+                    this.validation.sect[row][col] = [];
+                }
+            }
+        },
+
+        @param {String} num
+        @param {Number} rowId
+        @param {Number} colId
+        @param {String} oldNum
+        @returns {Boolean}
+
+
+        validateNumber: function( num, rowId, colId, oldNum ) {
+            var isValid = true,
+            sectRow = Math.floor(rowId / 3),
+            sectCol = Math.floor(colId / 3),
+
+            oldNum = oldNum || '';
+
+            if (this.validation.row[rowId].indexOf(oldNum) > -1) {
+                this.validation.row[rowId].splice(
+                    this.validation.row[rowId].indexOf(oldNum), 1
+                );
+            }
+            if (this.validation.col[colId].indexOf(oldNum) > -1) {
+                this.validation.col[colId].splice(
+                    this.validation.col[colId].indexOf(oldNum), 1
+                );
+            }
+            if (this.validation.sect[sectRow][sectCol].indexOf(oldNum) > -1) {
+                this.validation.sect[sectRow][sectCol].splice(
+                    this.validation.sect[sectRow][sectCol].indexOf(oldNum), 1
+                );
+            }
+            if (num !== '') {
+                if (
+                    $.isNumeric(num) &&
+
+                    Number(num) > 0 &&
+                    Number(num) <= 9
+                ) {
+                    if (
+                        $.inArray(num, this.validation.row[rowId]) > -1 ||
+                        $.inArray(num, this.validation.col[colId]) > -1 ||
+                        $.inArray(num, this.validation.sect[sectRow][sectCol]) > -1
+                    ) {
+                        isValid = false;
+                    }
+                }
+            }
     }
 })
