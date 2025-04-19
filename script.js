@@ -150,5 +150,14 @@ var Sudoku = ( function ( $) {
             $('.sudoku-container input').removeAttr('disabled');
             $('.sudoku-container').removeClass('valid-matrix');
         },
+        resetValidationMatrices: function() {
+            this.matrix = { 'row': {}, 'col': {}, 'sect': {} };
+            this.validation = { 'row': {}, 'col': {}, 'sect': {} };
+
+            for (var i=0; i<9; i++) {
+                this.matrix.row[i] = [ '', '', '', '', '', '', '', '', ''];
+                this.matrix.col[i] = [ '', '', '', '', '', '', '', '', ''];
+            }
+        }
     }
 })
