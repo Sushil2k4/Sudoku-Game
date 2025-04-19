@@ -221,7 +221,8 @@ var Sudoku = ( function ( $) {
                 this.validation.col[colId].push(num);
                 this.validation.sect[sectRow][sectCol].push(num);
             }
-            return isValid;
+            return isValid;   
+            
         }
     }
 })
