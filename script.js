@@ -213,8 +213,15 @@ var Sudoku = ( function ( $) {
                         $.inArray(num, this.validation.sect[sectRow][sectCol]) > -1
                     ) {
                         isValid = false;
+                    } else {
+                        isValid = true;
                     }
                 }
+                this.validation.row[rowId].push(num);
+                this.validation.col[colId].push(num);
+                this.validation.sect[sectRow][sectCol].push(num);
             }
+            return isValid;
+        }
     }
 })
