@@ -57,6 +57,8 @@ Welcome to **Sudoku Game**, a clean and immersive browser-based Sudoku puzzle bu
 
 2. Open index.html in any browser
 
+---
 
-📜 License
+# 📜 License
+---
 This project is open-source and free to use. 🚀
