@@ -221,8 +221,62 @@ var Sudoku = ( function ( $) {
                 this.validation.col[colId].push(num);
                 this.validation.sect[sectRow][sectCol].push(num);
             }
-            return isValid;   
-            
-        }
+            return isValid;               
+        },
+        @returns {Boolean}
+
+        validateMatrix: function() {
+            var isValid, val, $element,
+                hasError = false,
+
+                for( var row = 0; row<9; row++) {
+                    for (var col=0; col<9; col++) {
+                        val = this.matrix.row[row][col];
+                        isValid = this.validateNumber(val, row, col, val);
+                        this.$cellMatrix[row][col].toggleClass('sudoku-input-error', !isValid);
+                        if (!isValid) {
+                            hasError = true;
+                        }
+                }
+            }
+            return !hasError;
+        },
+
+        solveGame function(row, col) {
+            var cval, sqRow, sqCol, $nextSquare, legalValues,
+                sectRow, secCol, sectIndex, gameResult;
+                this.recursionCounter++;
+                $nextSquare = this.findClosestEmptySquare(row, col);
+                if ( !$nextSquare) {
+                    return true;
+                } else {
+                    sqRow = $nextSquare.data('row');
+                    sqCol = $nextSquare.data('col');
+                    legalValues = this.findLegalValuesForSquare(sqRow, sqCol);
+
+                    sectRow = Math.floor(sqRow / 3);
+                    sectCol = Math.floor(sqCol / 3);
+                    sectIndex = (sqRow % 3) * 3 + (sqCol % 3);
+                    for (var i=0; i<legalValues.length; i++) {
+                        cval = legalValues[i];
+                        $nextSquare.val(cval);
+                        this.matrix.row[sqRow][sqCol] = cval;
+                        this.matrix.col[sqCol][sqRow] = cval;
+                        this.matrix.sect[sectRow][sectCol][sectIndex] = cval;
+
+                        if (this.solveGame(sqRow, sqCol)) {
+                            return true;
+                        } else {
+                            this.backtrackCounter++;
+                            this.$cellMatrix[sqRow][sqCol].val('');
+                            this.matrix.row[sqRow][sqCol] = '';
+                            this.matrix.col[sqCol][sqRow] = '';
+                            this.matrix.sect[sectRow][secCol][sectIndex] = '';
+                        }
+                    }
+                    return false;
+                }
+        },
+        @param 
     }
 })
