@@ -36,7 +36,7 @@ Welcome to **Sudoku Game**, a clean and immersive browser-based Sudoku puzzle bu
 
 ## 📸 Preview
 
-![Sudoku Game Screenshot](https://user-images.githubusercontent.com/your-github-username/your-screenshot-path.png)
+![Sudoku Game Screenshot](https://github.com/Sushil2k4/Sudoku-Game/blob/master/Screenshot%202025-04-20%20173057.png)
 
 
 
