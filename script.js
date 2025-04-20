@@ -277,6 +277,96 @@ var Sudoku = ( function ( $) {
                     return false;
                 }
         },
-        @param 
+        @param {Number} row
+        @param {Number} col
+        @returns {jQuery}
+        findClosestEmptySquare: function(row, col) {
+            var walkingRow, walkingCol, found = false;
+            for (var i=(col+9*row); i<81; i++) {
+                walkingRow = Math.floor(i / 9);
+                walkingCol = i % 9;
+                if (this.matrix.row[walkingRow][walkingCol] === '') {
+                    found = true;
+                    return this.$cellMatrix[walkingRow][walkingCol];     
+                }           
+            }
+        },
+        @param {Number} row
+        @param {Number} col
+        @returns {Array}
+        findLegalValuesForSquare: function(row, col) {
+            var legalValues, legalNums, val, i,
+                sectRow = Math.floor(row / 3),
+                sectCol = Math.floor(col / 3),
+
+            legalNums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            for (i=0; i<9; i++) {
+                val = Number(this.matrix.col[col][i]);
+                if (val > 0) {
+                    if (legalNums.indexOf(val) > -1) {
+                        legalNums.splice(legalNums.indexOf(val), 1);
+                    }
+                }
+            }
+            for (i=0;i<9;i++) {
+                val = Number(this.matrix.row[row][i]);
+                if (val>0) {
+                    if (legalNums.indexOf(val) > -1) {
+                        legalNums.splice(legalNums.indexOf(val), 1);
+                    }
+                }
+            }
+            sectRow = Math.floor(row / 3);
+            sectCol = Math.floor(col / 3);
+            for (i=0; i<9; i++) {
+                val = Number(this.matrix.sect[sectRow][sectCol][i]);
+                if (val>0) {
+                    if (legalNums.indexOf(val) > -1) {
+                        legalNums.splice(legalNums.indexOf(val), 1);
+                    }
+                }
+            }
+            if (this.config.solver_shuffle_number) {
+                for (i=legalNums.length-1; i>0; i--) {
+                    var rand = getRandomInt(0, i);
+                    temp = legalNums[i];
+                    legalNums[i] = legalNums[rand];
+                    legalNums[rand] = temp;
+                }
+            }
+            return legalNums;
+        },
+    };
+
+    @param {Number} min 
+    @param {Number} max
+    @returns {Number}
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max + 1)) + min;
     }
-})
+    return {
+        @param {[type]} config 
+        @returns {[type]}
+
+        getInstance: function( config ) {
+            if ( !_instance ) {
+                _instance = init( config );
+            }
+            return _instance;
+        }
+    };
+} ) (jQuery);
+$(document).ready(function() {
+    var game = Sudoku.getInstance();
+    $('#container').append(game.getGameBoard());
+    $('#solve').click(function() {
+        game.solve();
+    } );
+    $('#validate').click(function() {
+        game.validate();
+    } );
+    $('#reset').click(function() {
+        game.reset();
+    } );
+} );
