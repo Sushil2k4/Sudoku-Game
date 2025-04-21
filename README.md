@@ -62,3 +62,6 @@ Welcome to **Sudoku Game**, a clean and immersive browser-based Sudoku puzzle bu
 # 📜 License
 ---
 This project is open-source and free to use. 🚀
+
+
+![Sudoku GIF](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGNreGZhemxwem4xeTVyMmNsaHc4cndteXp6bnM5ZGx2MHl6NmpvNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/fxI1G5PNC5esyNlIUs/giphy.gif)
